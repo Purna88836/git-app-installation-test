@@ -1,0 +1,10 @@
+# Example CODEOWNERS file
+# Each line is a file pattern followed by one or more owners
+
+# Owners for the entire repository
+*       @mlops-lead @devops-team
+
+# Owners for specific directories
+/data/  @data-team
+/models/ @ml-team
+/scripts/ @devops-team
