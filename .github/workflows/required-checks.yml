@@ -1,0 +1,17 @@
+name: Required Checks
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Tests
+        run: |
+          echo "Running tests..."
+          # Add test commands here
+      - name: Lint Code
+        run: |
+          echo "Linting code..."
+          # Add lint commands here
