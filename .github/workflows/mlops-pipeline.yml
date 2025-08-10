@@ -1,0 +1,50 @@
+name: MLOps Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - 'release/*'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  data-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run data checks
+        run: ./scripts/data_checks.sh
+
+  train:
+    runs-on: ubuntu-latest
+    needs: data-checks
+    steps:
+      - uses: actions/checkout@v2
+      - name: Train model
+        run: ./scripts/train_model.sh
+
+  evaluate:
+    runs-on: ubuntu-latest
+    needs: train
+    steps:
+      - uses: actions/checkout@v2
+      - name: Evaluate model
+        run: ./scripts/evaluate_model.sh
+
+  register:
+    runs-on: ubuntu-latest
+    needs: evaluate
+    steps:
+      - uses: actions/checkout@v2
+      - name: Register model
+        run: ./scripts/register_model.sh
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: register
+    steps:
+      - uses: actions/checkout@v2
+      - name: Deploy model
+        run: ./scripts/deploy_model.sh
