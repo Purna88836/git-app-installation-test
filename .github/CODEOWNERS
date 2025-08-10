@@ -1,0 +1,9 @@
+# Example CODEOWNERS file
+
+# Define owners for specific directories
+/docs/ @doc-team
+/src/ @dev-team
+/tests/ @qa-team
+
+# Global owner for the repository
+* @repo-admin
