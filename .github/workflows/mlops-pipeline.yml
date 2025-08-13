@@ -1,0 +1,60 @@
+name: MLOps Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - 'release/*'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  data-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run data quality checks
+        run: |
+          echo "Running data quality checks..."
+
+  train:
+    runs-on: ubuntu-latest
+    needs: data-checks
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Train model
+        run: |
+          echo "Training model using SageMaker..."
+
+  eval:
+    runs-on: ubuntu-latest
+    needs: train
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Evaluate model
+        run: |
+          echo "Evaluating model performance..."
+
+  register:
+    runs-on: ubuntu-latest
+    needs: eval
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Register model
+        run: |
+          echo "Registering model in SageMaker..."
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: register
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Deploy model
+        run: |
+          echo "Deploying model to Lambda..."
