@@ -1,0 +1,4 @@
+# CODEOWNERS file
+# Specify owners for different parts of the repository
+/lambda-function/ @team-lambda
+/sagemaker/ @team-sagemaker
